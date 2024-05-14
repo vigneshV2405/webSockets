@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script src="/socket.io.js"></script>
+    </head>
+    <body>
+        <h1>Scoreboard</h1>
+        <h2>IND -</strong>
+        <span id="ind" >0</span>
+        <h2>AUS -</strong>
+        <span id="aus" >0</span>
+        <script>
+            const socket = io();
+            fetch('http://localhost:3500/getscores').then((res)=>{
+                res.json().then((data)=>{
+                    document.getElementById('ind').innerHTML = data.scores.IND
+                    document.getElementById('aus').innerHTML = data.scores.AUS
+                })
+            })
+
+            socket.on('score',(scores)=>{
+                console.log(scores)
+                document.getElementById('ind').innerHTML = scores.IND
+                document.getElementById('aus').innerHTML = scores.AUS
+            })
+        </script>
+    </body>
+</html>
